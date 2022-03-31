@@ -5,6 +5,10 @@ import Questao02 from './components/Questao02';
 import Pai from './components/Questao03/Pai';
 import Questao04 from './components/Questao04';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Casa from './components/got/Casa';
+import Personagem from "./components/got/Personagem"
+import CalculaImc from './components/imc/CalculaImc';
+import Cidades from './components/votacao-cidades-hooks/Cidades';
 
 function App() {
   return (
@@ -29,7 +33,18 @@ function App() {
     //<Questao01/>
     //<Questao02/>
     //<Pai/>
-    <Questao04/>
+    
+    /*<div className='App'>
+      <Casa titulo="Stark">
+        <Personagem nome="Arya" casa="Stark" />
+        <Personagem nome="Robert" casa="Stark" />
+      </Casa>
+    </div>*/
+
+    //<CalculaImc/>
+
+    <Cidades/>
+
   )
 }
 
