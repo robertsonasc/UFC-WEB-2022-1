@@ -14,7 +14,7 @@ const EditProfessor = () => {
     setName(professor.name);
     setUniversity(professor.university);
     setDegree(professor.degree);
-  });
+  }, [params.id]);
 
   const handleSubmit = (event) => {
     //aqui código de comunicação com o backend

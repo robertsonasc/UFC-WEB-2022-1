@@ -14,7 +14,7 @@ const EditStudent = () => {
     setName(student.name);
     setCourse(student.course);
     setIra(student.ira);
-  });
+  }, [params.id]);
 
   const handleSubmit = (event) => {
     //aqui código de comunicação com o backend
