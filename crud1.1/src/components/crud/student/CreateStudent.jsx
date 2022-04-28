@@ -1,59 +1,81 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const CreateStudent = () => {
-  const [name, setName] = useState("");
-  const [course, setCourse] = useState("");
-  const [ira, setIra] = useState(0);
+function CreateStudent() {
 
-  const handleSubmit = (event) => {
-    //aqui código de comunicação com o backend
-    alert(`Nome: ${name} \nCurso: ${course}\nIRA: ${ira}`);
-  };
+    const [name, setName] = useState("")
+    const [course, setCourse] = useState("")
+    const [ira, setIRA] = useState(0)
+    const navigate = useNavigate()
 
-  return (
-    <div>
-      <h2>Criar Estudante</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Nome</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name == null || name === undefined ? "" : name}
-            name="name"
-            onChange={(event) => setName(event.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Curso</label>
-          <input
-            type="text"
-            className="form-control"
-            value={course ?? ""}
-            name="course"
-            onChange={(event) => setCourse(event.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>IRA</label>
-          <input
-            type="text"
-            className="form-control"
-            value={ira ?? 0}
-            name="ira"
-            onChange={(event) => setIra(event.target.value)}
-          />
-        </div>
-        <div className="form-group" style={{ paddingTop: 10 }}>
-          <input
-            type="submit"
-            value="Criar Estudante"
-            className="btn btn-primary"
-          />
-        </div>
-      </form>
-    </div>
-  );
-};
+    const handleSubmit = (event) => {
+        event.preventDefault()
 
-export default CreateStudent;
+        const newStudent = { name, course, ira }
+        axios.post('http://localhost:3002/crud/students/create', newStudent)
+            .then(
+                (res) => {
+                    console.log(res.data._id)
+                    alert(`Aluno ${name} criado com sucesso.`)
+                    navigate("/listStudent")
+                }
+            )
+            .catch(
+                (error) => {
+                    console.log(error)
+                }
+            )
+
+
+        console.log(name)
+        console.log(course)
+        console.log(ira)
+    }
+
+    return (
+        <>
+            <main>
+                <h2>
+                    Criar Estudante
+                </h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label>Nome: </label>
+                        <input type="text"
+                            className="form-control"
+                            required
+                            value={(name == null || name === undefined) ? "" : name}
+                            name="name"
+                            onChange={(event) => { setName(event.target.value) }} />
+                    </div>
+                    <div className="form-group">
+                        <label>Curso: </label>
+                        <input type="text"
+                            className="form-control"
+                            required
+                            value={course ?? ""}
+                            name="course"
+                            onChange={(event) => { setCourse(event.target.value) }} />
+                    </div>
+                    <div className="form-group">
+                        <label>IRA: </label>
+                        <input type="text"
+                            className="form-control"
+                            value={ira ?? 0}
+                            name="ira"
+                            onChange={(event) => { setIRA(event.target.value) }} />
+                    </div>
+                    <div className="form-group" style={{ paddingTop: 20 }}>
+                        <input type="submit" value="Criar Estudante" className="btn btn-primary" />
+                    </div>
+                </form>
+            </main>
+            <nav>
+                <Link to="/">Home</Link>
+            </nav>
+        </>
+    );
+}
+
+export default CreateStudent
