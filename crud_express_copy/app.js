@@ -3,8 +3,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+require("./db/mongo.connection")
+
 var StudentsRoute = require('./routes/student/StudentRoute');
 var ProfessorRoute = require('./routes/professor/ProfessorRoute')
+var students = require('./routes/student/students.routes.mongo')
+var professors = require('./routes/professor/professors.routes.mongo')
 
 var app = express();
 
@@ -20,7 +24,7 @@ app.use(function (req, res, next) {
 });
 
 //app.use('/api/v1/users', users);
-app.use('/crud/students',StudentsRoute)
-app.use('/crud/professors', ProfessorRoute)
+app.use('/crud/students', students)
+app.use('/crud/professors', professors)
 
 module.exports = app;
